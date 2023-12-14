@@ -7,15 +7,22 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var BOT_TOKEN string
-
 const PREFIX = "!bot"
 
-func init() {
+type Config struct {
+	BOT_TOKEN string
+}
+
+func GetConfig() Config {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	BOT_TOKEN = os.Getenv("BOT_TOKEN")
+	bt := os.Getenv("BOT_TOKEN")
+
+	return Config{
+		BOT_TOKEN: bt,
+	}
+
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/tltorress/simpleBot/cmd/config"
 	"github.com/tltorress/simpleBot/internal/bot"
 	"github.com/tltorress/simpleBot/internal/platform/logger"
 )
@@ -8,5 +9,8 @@ import (
 func main() {
 	logger.InitLogger()
 
-	bot.StartBot()
+	cfg := config.GetConfig()
+
+	bot.StartBot(cfg)
+
 }

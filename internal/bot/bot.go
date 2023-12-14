@@ -12,20 +12,22 @@ import (
 	"github.com/tltorress/simpleBot/internal/platform/logger"
 )
 
-func StartBot() error {
-	dg, err := discordgo.New(fmt.Sprintf("Bot %s", config.BOT_TOKEN))
+func StartBot(cfg config.Config) error {
+	dg, err := discordgo.New(fmt.Sprintf("Bot %s", cfg.BOT_TOKEN))
 	if err != nil {
 		logger.MyLog.Error("Can't create the bot: ", err)
 		return err
 	}
 
-	dg.AddHandler(handler.MessageHandler)
+	dg.AddHandler(handler.MessageHandler())
 
-	dg.Identify.Intents = discordgo.IntentsGuildMessages
+	//dg.Identify.Intents = discordgo.IntentsGuildMessages
+	dg.Identify.Intents = discordgo.IntentsAllWithoutPrivileged
 
 	err = dg.Open()
 	if err != nil {
 		logger.MyLog.Error("Can't stablish connection with bot: ", err)
+		return err
 	}
 	defer dg.Close()
 
